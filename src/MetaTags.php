@@ -158,7 +158,10 @@ class MetaTags
             $html[] = $this->renderGroup($group);
         }
 
-        return implode('', $html);
+        $html = implode('', $html);
+
+        // Remove first indentation
+        return preg_replace("/^{$this->indentation}/", '', $html, 1);
     }
 
     /**

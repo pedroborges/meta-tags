@@ -32,7 +32,7 @@ class MetaTagsTest extends TestCase
         $html = $this->head->render();
 
         $expectedHtml = <<<'EOD'
-    <link rel="alternate" hreflang="pt-br" href="https://br.pedroborg.es">
+<link rel="alternate" hreflang="pt-br" href="https://br.pedroborg.es">
     <link rel="alternate" hreflang="en-us" href="https://en.pedroborg.es">
 
 EOD;
@@ -90,7 +90,7 @@ EOD;
         $html = $this->head->render();
 
         $expectedHtml = <<<'EOD'
-    <title>&lt;title&gt; tag test</title>
+<title>&lt;title&gt; tag test</title>
     <meta name="description" content="&quot;Meta Tags&quot; test">
     <meta property="og:title" content="Open Graph test">
     <meta name="twitter:card" content="summary">
