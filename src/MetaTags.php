@@ -30,7 +30,7 @@ class MetaTags
     public function __construct($indentation = null, $order = null)
     {
         $this->indentation = $indentation ?: '    ';
-        $this->order = $order ?: ['title', 'meta', 'og', 'twitter', 'link'];
+        $this->order = $order ?: ['title', 'meta', 'og', 'twitter', 'link', 'ld'];
     }
 
     /**
@@ -107,6 +107,27 @@ class MetaTags
         $this->addToTagsGroup('og', $key, $tag);
 
         return $tag;
+    }
+
+    /**
+     * Build an Open Graph meta tag.
+     *
+     * @param string   $key
+     * @param string   $value
+     * @param boolean  $prefixed
+     *
+     * @return string
+     */
+    public function ld($value)
+    {
+        if (! empty($value)) {
+          $tag = "<script type=\"application/ld+json\">\n" . json_encode($value, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . "\n</script>";
+
+          $this->tags['ld'][] = $tag;
+
+          return $tag;
+        }
+
     }
 
     /**
