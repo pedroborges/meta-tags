@@ -79,6 +79,23 @@ EOD;
         $this->assertEquals('<meta name="twitter:card" content="summary">', $preffixed);
     }
 
+    public function testLinkedDataTag()
+    {
+        $tag = $this->head->ld([
+          '@context' => 'http://schema.org/',
+          '@type' => 'MusicAlbum',
+          'name' => 'Music album test'
+        ]);
+
+        $this->assertEquals('<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "MusicAlbum",
+    "name": "Music album test"
+}
+</script>', $tag);
+    }
+
     public function testRendering()
     {
         $this->head->link('canonical', 'https://pedroborg.es');
