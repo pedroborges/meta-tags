@@ -32,15 +32,15 @@ $tags->link('alternate', [
 // <meta property="og:type" content="website">
 // <meta property="og:url" content="https://pedroborg.es">
 // <meta property="og:image" content="https://pedroborg.es/cover.jpg">
-$tags->head->og('title', 'The title');
-$tags->head->og('type', 'website');
-$tags->head->og('url', 'https://pedroborg.es');
-$tags->head->og('image', 'https://pedroborg.es/cover.jpg');
+$tags->og('title', 'The title');
+$tags->og('type', 'website');
+$tags->og('url', 'https://pedroborg.es');
+$tags->og('image', 'https://pedroborg.es/cover.jpg');
 
 // <meta name="twitter:card" content="summary">
 // <meta name="twitter:site" content="@pedroborg_es">
-$tags->head->twitter('card', 'summary');
-$tags->head->twitter('site', '@pedroborg_es');
+$tags->twitter('card', 'summary');
+$tags->twitter('site', '@pedroborg_es');
 ```
 
 When you are ready to output them, use the `render` method inside your template `<head>` element:
