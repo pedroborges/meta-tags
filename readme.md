@@ -12,7 +12,7 @@ Create a new `MetaTags` instance then you are ready to start adding meta tags:
 ```php
 use PedroBorges\MetaTags\MetaTags;
 
-$tags = new MetaTags;
+$tags = new MetaTags();
 
 // <title>My Awesome Site</title>
 $tags->title('My Awesome Site');

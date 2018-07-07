@@ -310,4 +310,13 @@ class MetaTags
     {
         return htmlentities($value, ENT_QUOTES, 'UTF-8');
     }
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
 }
