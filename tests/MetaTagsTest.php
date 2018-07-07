@@ -81,19 +81,23 @@ EOD;
 
     public function testLinkedDataTag()
     {
-        $tag = $this->head->ld([
-          '@context' => 'http://schema.org/',
-          '@type' => 'MusicAlbum',
-          'name' => 'Music album test'
+        $tag = $this->head->jsonld([
+            '@context' => 'http://schema.org/',
+            '@type' => 'MusicAlbum',
+            'name' => 'Music album test'
         ]);
 
-        $this->assertEquals('<script type="application/ld+json">
+        $expectedHtml = <<<'EOD'
+<script type="application/ld+json">
 {
     "@context": "http://schema.org/",
     "@type": "MusicAlbum",
     "name": "Music album test"
 }
-</script>', $tag);
+</script>
+EOD;
+
+        $this->assertEquals($expectedHtml, $tag);
     }
 
     public function testRendering()
@@ -103,6 +107,12 @@ EOD;
         $this->head->title('<title> tag test');
         $this->head->og('title', 'Open Graph test');
         $this->head->meta('description', '"Meta Tags" test');
+        $this->head->jsonld([
+            '@context' => 'http://schema.org',
+            '@type' => 'Organization',
+            'name' => 'Example Co',
+            'url' => 'https://www.example.com'
+        ]);
 
         $html = $this->head->render();
 
@@ -112,6 +122,14 @@ EOD;
     <meta property="og:title" content="Open Graph test">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://pedroborg.es">
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Example Co",
+        "url": "https://www.example.com"
+    }
+    </script>
 
 EOD;
 
