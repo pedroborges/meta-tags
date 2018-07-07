@@ -174,15 +174,18 @@ class MetaTags
     }
 
     /**
-     * Render all registered HTML meta tags
+     * Render all or a specific group of HTML meta tags
+     *
+     * @param mixed  $groups
      *
      * @return string
      */
-    public function render()
+    public function render($groups = null)
     {
+        $groups = ! is_null($groups) ? (array) $groups : $this->order;
         $html = [];
 
-        foreach ($this->order as $group) {
+        foreach ($groups as $group) {
             $html[] = $this->renderGroup($group);
         }
 

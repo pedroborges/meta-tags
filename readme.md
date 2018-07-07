@@ -66,6 +66,18 @@ When you are ready to output them, use the `render` method inside your template 
     <?php echo $tags->render() ?>
 ```
 
+You can also render only one tag:
+
+```php
+    <?php echo $tags->render('title') ?>
+```
+
+Or specify which tags to render:
+
+```php
+    <?php echo $tags->render(['og', 'twitter', 'json-ld']) ?>
+```
+
 By default Meta Tag will indent the tags with 4 spaces and use the following order:
 
 1. `<title>`

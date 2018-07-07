@@ -48,8 +48,15 @@ EOD;
             'href' => 'https://br.pedroborg.es'
         ]);
 
-        $this->assertEquals('<link rel="canonical" href="https://pedroborg.es">', $tag);
-        $this->assertEquals('<link rel="alternate" hreflang="pt-br" href="https://br.pedroborg.es">', $alternate);
+        $this->assertEquals(
+            '<link rel="canonical" href="https://pedroborg.es">',
+            $tag
+        );
+
+        $this->assertEquals(
+            '<link rel="alternate" hreflang="pt-br" href="https://br.pedroborg.es">',
+            $alternate
+        );
     }
 
     public function testMetaTag()
@@ -57,8 +64,15 @@ EOD;
         $tag = $this->head->meta('description', 'Meta tag test');
         $encoded = $this->head->meta('description', '"Meta tag" test');
 
-        $this->assertEquals('<meta name="description" content="Meta tag test">', $tag);
-        $this->assertEquals('<meta name="description" content="&quot;Meta tag&quot; test">', $encoded);
+        $this->assertEquals(
+            '<meta name="description" content="Meta tag test">',
+            $tag
+        );
+
+        $this->assertEquals(
+            '<meta name="description" content="&quot;Meta tag&quot; test">',
+            $encoded
+        );
     }
 
     public function testOpenGraphTag()
@@ -66,8 +80,15 @@ EOD;
         $tag = $this->head->og('title', 'Open Graph test');
         $preffixed = $this->head->og('og:title', 'Open Graph test', false);
 
-        $this->assertEquals('<meta property="og:title" content="Open Graph test">', $tag);
-        $this->assertEquals('<meta property="og:title" content="Open Graph test">', $preffixed);
+        $this->assertEquals(
+            '<meta property="og:title" content="Open Graph test">',
+            $tag
+        );
+
+        $this->assertEquals(
+            '<meta property="og:title" content="Open Graph test">',
+            $preffixed
+        );
     }
 
     public function testTwitterCardTag()
@@ -130,6 +151,36 @@ EOD;
         "url": "https://www.example.com"
     }
     </script>
+
+EOD;
+
+        $this->assertEquals($expectedHtml, $html);
+    }
+
+    public function testRenderingGroup()
+    {
+        $this->head->link('canonical', 'https://pedroborg.es');
+        $this->head->twitter('card', 'summary');
+
+        $this->assertEquals(
+            '<meta name="twitter:card" content="summary">',
+            trim($this->head->render('twitter'))
+        );
+    }
+
+    public function testRenderingGroups()
+    {
+        $this->head->link('canonical', 'https://pedroborg.es');
+        $this->head->twitter('card', 'summary');
+        $this->head->title('<title> tag test');
+        $this->head->og('title', 'Open Graph test');
+        $this->head->meta('description', '"Meta Tags" test');
+
+        $html = $this->head->render(['og', 'meta']);
+
+        $expectedHtml = <<<'EOD'
+<meta property="og:title" content="Open Graph test">
+    <meta name="description" content="&quot;Meta Tags&quot; test">
 
 EOD;
 
