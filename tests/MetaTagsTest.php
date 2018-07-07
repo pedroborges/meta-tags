@@ -42,11 +42,12 @@ EOD;
 
     public function testLinkTag()
     {
-        $tag = $this->head->link('canonical', 'https://pedroborg.es');
+        $tag       = $this->head->link('canonical', 'https://pedroborg.es');
         $alternate = $this->head->link('alternate', [
             'hreflang' => 'pt-br',
             'href' => 'https://br.pedroborg.es'
         ]);
+        $empty     = $this->head->link('dns-prefetch', '');
 
         $this->assertEquals(
             '<link rel="canonical" href="https://pedroborg.es">',
@@ -57,12 +58,15 @@ EOD;
             '<link rel="alternate" hreflang="pt-br" href="https://br.pedroborg.es">',
             $alternate
         );
+
+        $this->assertEquals('', $empty);
     }
 
     public function testMetaTag()
     {
-        $tag = $this->head->meta('description', 'Meta tag test');
+        $tag     = $this->head->meta('description', 'Meta tag test');
         $encoded = $this->head->meta('description', '"Meta tag" test');
+        $empty   = $this->head->meta('description', '');
 
         $this->assertEquals(
             '<meta name="description" content="Meta tag test">',
@@ -73,12 +77,15 @@ EOD;
             '<meta name="description" content="&quot;Meta tag&quot; test">',
             $encoded
         );
+
+        $this->assertEquals('', $empty);
     }
 
     public function testOpenGraphTag()
     {
-        $tag = $this->head->og('title', 'Open Graph test');
+        $tag       = $this->head->og('title', 'Open Graph test');
         $preffixed = $this->head->og('og:title', 'Open Graph test', false);
+        $empty     = $this->head->og('og:title', '', false);
 
         $this->assertEquals(
             '<meta property="og:title" content="Open Graph test">',
@@ -89,15 +96,19 @@ EOD;
             '<meta property="og:title" content="Open Graph test">',
             $preffixed
         );
+
+        $this->assertEquals('', $empty);
     }
 
     public function testTwitterCardTag()
     {
-        $tag = $this->head->twitter('card', 'summary');
+        $tag       = $this->head->twitter('card', 'summary');
         $preffixed = $this->head->twitter('twitter:card', 'summary', false);
+        $empty     = $this->head->twitter('twitter:image', '', false);
 
         $this->assertEquals('<meta name="twitter:card" content="summary">', $tag);
         $this->assertEquals('<meta name="twitter:card" content="summary">', $preffixed);
+        $this->assertEquals('', $empty);
     }
 
     public function testLinkedDataTag()

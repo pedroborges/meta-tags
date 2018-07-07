@@ -43,21 +43,23 @@ class MetaTags
      */
     public function link($key, $value)
     {
-        $attributes = ['rel' => $key];
+        if (! empty($value)) {
+            $attributes = ['rel' => $key];
 
-        if (is_array($value)) {
-            foreach ($value as $key => $v) {
-                $attributes[$key] = $v;
+            if (is_array($value)) {
+                foreach ($value as $key => $v) {
+                    $attributes[$key] = $v;
+                }
+            } else {
+                $attributes['href'] = $value;
             }
-        } else {
-            $attributes['href'] = $value;
+
+            $tag = $this->createTag('link', $attributes);
+
+            $this->addToTagsGroup('link', $key, $tag);
+
+            return $tag;
         }
-
-        $tag = $this->createTag('link', $attributes);
-
-        $this->addToTagsGroup('link', $key, $tag);
-
-        return $tag;
     }
 
     /**
@@ -70,21 +72,23 @@ class MetaTags
      */
     public function meta($key, $value)
     {
-        $attributes = ['name' => $key];
+        if (! empty($value)) {
+            $attributes = ['name' => $key];
 
-        if (is_array($value)) {
-            foreach ($value as $key => $v) {
-                $attributes[$key] = $v;
+            if (is_array($value)) {
+                foreach ($value as $key => $v) {
+                    $attributes[$key] = $v;
+                }
+            } else {
+                $attributes['content'] = $value;
             }
-        } else {
-            $attributes['content'] = $value;
+
+            $tag = $this->createTag('meta', $attributes);
+
+            $this->addToTagsGroup('meta', $key, $tag);
+
+            return $tag;
         }
-
-        $tag = $this->createTag('meta', $attributes);
-
-        $this->addToTagsGroup('meta', $key, $tag);
-
-        return $tag;
     }
 
     /**
@@ -98,15 +102,17 @@ class MetaTags
      */
     public function og($key, $value, $prefixed = true)
     {
-        $key = $prefixed ? "og:{$key}" : $key;
-        $tag = $this->createTag('meta', [
-            'property' => $key,
-            'content' => $value
-        ]);
+        if (! empty($value)) {
+            $key = $prefixed ? "og:{$key}" : $key;
+            $tag = $this->createTag('meta', [
+                'property' => $key,
+                'content' => $value
+            ]);
 
-        $this->addToTagsGroup('og', $key, $tag);
+            $this->addToTagsGroup('og', $key, $tag);
 
-        return $tag;
+            return $tag;
+        }
     }
 
     /**
@@ -162,15 +168,17 @@ class MetaTags
      */
     public function twitter($key, $value, $prefixed = true)
     {
-        $key = $prefixed ? "twitter:{$key}" : $key;
-        $tag = $this->createTag('meta', [
-            'name' => $key,
-            'content' => $value
-        ]);
+        if (! empty($value)) {
+            $key = $prefixed ? "twitter:{$key}" : $key;
+            $tag = $this->createTag('meta', [
+                'name' => $key,
+                'content' => $value
+            ]);
 
-        $this->addToTagsGroup('twitter', $key, $tag);
+            $this->addToTagsGroup('twitter', $key, $tag);
 
-        return $tag;
+            return $tag;
+        }
     }
 
     /**
