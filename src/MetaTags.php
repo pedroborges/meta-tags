@@ -5,7 +5,7 @@ namespace PedroBorges\MetaTags;
 /**
  * PHP Meta Tags
  *
- * @version   0.0.1
+ * @version   0.0.2
  * @author    Pedro Borges <oi@pedroborg.es>
  * @copyright Pedro Borges <oi@pedroborg.es>
  * @link      https://github.com/pedroborges/meta-tags
