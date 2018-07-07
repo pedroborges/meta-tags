@@ -1,6 +1,6 @@
 # PHP Meta Tags [![Release](https://img.shields.io/github/release/pedroborges/meta-tags.svg)](https://github.com/pedroborges/meta-tags/releases) [![Issues](https://img.shields.io/github/issues/pedroborges/meta-tags.svg)](https://github.com/pedroborges/meta-tags/issues)
 
-HTML meta tags generator for PHP. Supports [Open Graph](http://ogp.me), [Twitter Cards](https://dev.twitter.com/cards/overview) and [JSON Linked Data](http://json-ld.org/) out of the box.
+HTML meta tags generator for PHP. Supports [Open Graph](http://ogp.me), [Twitter Cards](https://dev.twitter.com/cards/overview), and [JSON Linked Data](https://json-ld.org) out of the box.
 
 ## Installation
 
@@ -49,7 +49,7 @@ $tags->head->twitter('site', '@pedroborg_es');
 //     "name": "Pedro Borges"
 // }
 // </script>
-$tags->head->ld([
+$tags->head->jsonld([
     '@context' => 'http://schema.org',
     '@type': 'Person',
     'name': 'Pedro Borges'
@@ -73,7 +73,7 @@ By default Meta Tag will indent the tags with 4 spaces and use the following ord
 1. `<meta property="og:*">` (Open Graph)
 1. `<meta name="twitter:*">` (Twitter Cards)
 1. `<link>`
-1. `<script type="application/ld+json">`
+1. `<script type="application/ld+json">` (JSON-LD)
 
 You can change that when instantiating the `MetaTag` class:
 

@@ -30,7 +30,7 @@ class MetaTags
     public function __construct($indentation = null, $order = null)
     {
         $this->indentation = $indentation ?: '    ';
-        $this->order = $order ?: ['title', 'meta', 'og', 'twitter', 'link', 'ld'];
+        $this->order = $order ?: ['title', 'meta', 'og', 'twitter', 'link', 'json-ld'];
     }
 
     /**
@@ -110,24 +110,28 @@ class MetaTags
     }
 
     /**
-     * Build an Open Graph meta tag.
+     * Build an JSON linked data meta tag.
      *
-     * @param string   $key
-     * @param string   $value
-     * @param boolean  $prefixed
+     * @param array  $schema
      *
      * @return string
      */
-    public function ld($value)
+    public function jsonld($schema)
     {
-        if (! empty($value)) {
-          $tag = "<script type=\"application/ld+json\">\n" . json_encode($value, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . "\n</script>";
-
-          $this->tags['ld'][] = $tag;
-
-          return $tag;
+        if (empty($schema)) {
+            return;
         }
 
+        $json = json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+        $script = "<script type=\"application/ld+json\">\n" . $json . "\n</script>";
+
+        $this->tags['json-ld'][] = implode(
+            "\n" . $this->indentation,
+            explode("\n", $script)
+        );
+
+        return $script;
     }
 
     /**
