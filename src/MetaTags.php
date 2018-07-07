@@ -46,7 +46,9 @@ class MetaTags
         $attributes = ['rel' => $key];
 
         if (is_array($value)) {
-            foreach ($value as $key => $v) { $attributes[$key] = $v; }
+            foreach ($value as $key => $v) {
+                $attributes[$key] = $v;
+            }
         } else {
             $attributes['href'] = $value;
         }
@@ -71,7 +73,9 @@ class MetaTags
         $attributes = ['name' => $key];
 
         if (is_array($value)) {
-            foreach ($value as $key => $v) { $attributes[$key] = $v; }
+            foreach ($value as $key => $v) {
+                $attributes[$key] = $v;
+            }
         } else {
             $attributes['content'] = $value;
         }
@@ -173,7 +177,9 @@ class MetaTags
      */
     protected function renderGroup($group)
     {
-        if (! isset($this->tags[$group])) return;
+        if (! isset($this->tags[$group])) {
+            return;
+        }
 
         $html = [];
 
