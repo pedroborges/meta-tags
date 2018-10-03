@@ -56,7 +56,7 @@ class MetaTags
 
             $tag = $this->createTag('link', $attributes);
 
-            $this->addToTagsGroup('link', $key, $tag);
+            $this->addToTagsGroup('link', $tag);
 
             return $tag;
         }
@@ -85,7 +85,7 @@ class MetaTags
 
             $tag = $this->createTag('meta', $attributes);
 
-            $this->addToTagsGroup('meta', $key, $tag);
+            $this->addToTagsGroup('meta', $tag);
 
             return $tag;
         }
@@ -109,7 +109,7 @@ class MetaTags
                 'content' => $value
             ]);
 
-            $this->addToTagsGroup('og', $key, $tag);
+            $this->addToTagsGroup('og', $tag);
 
             return $tag;
         }
@@ -175,7 +175,7 @@ class MetaTags
                 'content' => $value
             ]);
 
-            $this->addToTagsGroup('twitter', $key, $tag);
+            $this->addToTagsGroup('twitter', $tag);
 
             return $tag;
         }
@@ -237,24 +237,17 @@ class MetaTags
      * Add single HTML element to tags group.
      *
      * @param string  $group
-     * @param string  $key
      * @param string  $tag
      *
      * @return void
      */
-    protected function addToTagsGroup($group, $key, $tag)
+    protected function addToTagsGroup($group, $tag)
     {
-        if (isset($this->tags[$group][$key])) {
-            $existingTag = $this->tags[$group][$key];
-
-            if (is_array($existingTag)) {
-                $this->tags[$group][$key][] = $tag;
-            } else {
-                $this->tags[$group][$key] = [$existingTag, $tag];
-            }
-        } else {
-            $this->tags[$group][$key] = $tag;
+        if (!isset($this->tags[$group])) {
+            $this->tags[$group] = [];
         }
+
+        $this->tags[$group][] = $tag;
     }
 
     /**
