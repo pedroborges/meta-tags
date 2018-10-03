@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 
 class MetaTagsTest extends TestCase
 {
+    /** @var MetaTags */
+    private $head;
+
     public function setUp()
     {
         $this->head = new MetaTags;
@@ -192,6 +195,28 @@ EOD;
         $expectedHtml = <<<'EOD'
 <meta property="og:title" content="Open Graph test">
     <meta name="description" content="&quot;Meta Tags&quot; test">
+
+EOD;
+
+        $this->assertEquals($expectedHtml, $html);
+    }
+
+    public function testOgImageOrder()
+    {
+        $this->head->og('image', 'http://image1');
+        $this->head->og('image:alt', 'image1 caption');
+        $this->head->og('image', 'http://image2');
+        $this->head->og('image:type', 'image/png');
+        $this->head->og('image', 'http://image3');
+
+        $html = $this->head->render(['og']);
+
+        $expectedHtml = <<<'EOD'
+<meta property="og:image" content="http://image1">
+    <meta property="og:image:alt" content="image1 caption">
+    <meta property="og:image" content="http://image2">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image" content="http://image3">
 
 EOD;
 
